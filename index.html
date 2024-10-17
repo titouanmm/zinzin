@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <title>🚨MSAULII🚨</title>
+    <meta name="description" content="description">
+    <link rel="icon" href="images/favicon.png" type="image/png"
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://use.typekit.net/qfz0uih.css">
+    <style>
+        body {
+            font-family: "neue-haas-unica", sans-serif;
+            font-weight: 200;
+            font-size: 1rem;
+            background-color: black;
+            color: #ffffdd;
+            margin: 50px 10px 0;
+        }
+
+        .responsive-image {
+            width: 100%;
+            max-width: 450px;
+            height: auto;
+            margin-bottom: 4rem;
+        }
+
+        @media (min-width: 450px) {
+            .responsive-image {
+                max-width: 300px;
+            }
+        }
+
+        .clickable {
+            cursor: pointer;
+        }
+
+        .transparent {
+            opacity: 0;
+            transition: opacity 0.75s ease;
+        }
+
+        #div-parent, #div-footer {
+            display: flex;
+            justify-content: center;
+        }
+
+        #div-parent {
+            margin-top: 80px;
+        }
+
+        @media (min-width: 450px) {
+            #div-parent, #div-footer {
+                max-width: 300px;
+            }
+        }
+
+        #div-formulaire {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 221, 0.5);
+            border-radius: 3px;
+            background-color: #0d0d0d;
+            transition: background-color 0.3s;
+        }
+
+        input[type="text"], button {
+            font-family: "neue-haas-unica", sans-serif;
+            font-weight: 200;
+            font-size: 1rem;
+            background-color: #0d0d0d;
+            border: none;
+            color: rgba(255, 255, 221, 0.5);
+            padding: 7px;
+        }
+
+        input[type="text"] {
+            width: 8rem;
+            text-align: center;
+        }
+
+        button {
+            width: 5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .valid {
+            background-color: green !important;
+        }
+
+        #div-footer {
+            margin: 1000px 0 10px;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 221, 0.5);
+        }
+
+        #message {
+            font-size: 0.8rem;
+            color: rgba(255, 255, 221, 0.5);
+            text-align: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <img src="images/donnezmoiuni.jpg" alt="Stay Tuned" class="responsive-image">
+
+    <p>LES MIDTERMS SONT TERMINÉS,</p>
+    <p>PRÉPAREZ-VOUS AU PIRE...</p>
+
+    <p style="color: white;" id="countdown"></p>
+
+    <p class="clickable" onclick="showForm()">SE PRÉINSCRIRE</p>
+    
+    <div id="div-parent">
+        <div id="div-formulaire">
+            <input type="text" id="phoneNumber" placeholder="00 00 00 00 00" maxlength="14" oninput="formatPhoneNumber(this)">
+            <button id="valider" onclick="validate()">VALIDER</button>
+        </div>
+    </div>
+
+    <div id="div-footer">
+        <p id="qui-nous-sommes" class="clickable" onclick="bye()">QUI NOUS SOMMES?</p>
+    </div>
+
+    <script>
+        const countdownElement = document.getElementById("countdown");
+        const countDownDate = new Date("October 20, 2024 14:00:00 GMT+0200").getTime();
+        const targetDate = "20 10 2024 ";
+
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+            const hours = String(Math.floor(distance / (1000 * 60 * 60))).padStart(2, '0');
+            const minutes = String(Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))).padStart(2, '0');
+            const seconds = String(Math.floor((distance % (1000 * 60)) / 1000)).padStart(2, '0');
+            const centiseconds = String(Math.floor((distance % 1000) / 10)).padStart(2, '0');
+
+            countdownElement.innerHTML = `${targetDate} ${hours}:${minutes}:${seconds}:${centiseconds}`;
+
+            if (distance < 0) countdownElement.innerHTML = `${targetDate} 00:00:00:00`;
+        }, 10);
+
+        function formatPhoneNumber(input) {
+            input.value = input.value.replace(/\D/g, '').slice(0, 10).replace(/(\d{2})(?=\d)/g, '$1 ').trim();
+        }
+
+        function validate() {
+            const phoneNumber = document.getElementById('phoneNumber').value;
+            const button = document.getElementById('valider');
+            const formulaireDiv = document.getElementById('div-formulaire');
+            const parentDiv = document.getElementById('div-parent');
+
+            if (/^0\d{1} \d{2} \d{2} \d{2} \d{2}$/.test(phoneNumber)) {
+                button.classList.add('valid');
+
+                setTimeout(() => {
+                    formulaireDiv.remove();
+
+                    const messageDiv = document.createElement('div');
+                    messageDiv.id = 'message';
+                    messageDiv.innerHTML = 'BIEN REÇU !<br>TU RECEVRAS UN MESSAGE DANS LES JOURS À VENIR...';
+                    parentDiv.appendChild(messageDiv);
+
+                    setTimeout(() => {
+                        messageDiv.classList.add('transparent');
+                    }, 5000);
+                }, 1500);
+            }
+        }
+
+        function showForm() {
+            document.getElementById('div-formulaire').style.display = 'flex';
+        }
+
+        function bye() {
+            const textElement = document.getElementById("qui-nous-sommes");
+            textElement.classList.add("transparent");
+            setTimeout(() => textElement.style.visibility = "hidden", 750);
+        }
+    </script>
+</body>
+</html>
